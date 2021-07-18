@@ -1,3 +1,4 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import {
   MessageBody,
   SubscribeMessage,
@@ -5,21 +6,34 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { LogEvent } from './event.entity';
+import { LogEventDto } from './events.dto';
+import { EventsRepository } from './events.repository';
 
 @WebSocketGateway()
 export class EventsGateway {
+  constructor(
+    @InjectRepository(EventsRepository)
+    private eventsRepository: EventsRepository,
+  ) {}
+
   @WebSocketServer()
   server: Server;
 
   @SubscribeMessage('events')
-  async receiveTestMessage(@MessageBody() data: string): Promise<string> {
+  async receiveLogMessage(@MessageBody() data: LogEventDto): Promise<LogEvent> {
     console.log('[EventSocket] ', data);
-    return `Acked ${data}`;
-  }
+    const { priority, tag, content } = data;
 
-  @SubscribeMessage('channel2')
-  async receiveChannel2(@MessageBody() data: string): Promise<string> {
-    console.log('[EventSocket] channel2: ', data);
-    return `Acked from channel 2: ${data}`;
+    const logEvent = this.eventsRepository.create({
+      priority,
+      tag,
+      content,
+      created: Date.now(),
+    });
+
+    this.eventsRepository.save(logEvent);
+
+    return logEvent;
   }
 }
