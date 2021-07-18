@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+    <script>
+      const socket = io('http://localhost:3001');
+      socket.on('connect', function() {
+        console.log('Connected');
+
+        socket.emit('events', 'client send test 1', response => console.log(response));
+        socket.emit('channel2', 'client send test 2', response => console.log(response))
+      });
+      socket.on('events', function(data) {
+        console.log('event', data);
+      });
+      socket.on('exception', function(data) {
+        console.log('event', data);
+      });
+      socket.on('disconnect', function() {
+        console.log('Disconnected');
+      });
+    </script>
+  </head>
+
+  <body></body>
+</html>
