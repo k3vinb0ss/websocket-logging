@@ -14,7 +14,7 @@ async function bootstrap() {
     app.useStaticAssets(path_1.join(__dirname, '..', 'public'));
     app.setBaseViewsDir(path_1.join(__dirname, '..', 'views'));
     app.setViewEngine('hbs');
-    await app.listen(3001);
+    await app.listen(80);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

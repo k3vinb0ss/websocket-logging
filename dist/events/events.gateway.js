@@ -47,7 +47,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "receiveLogMessage", null);
 EventsGateway = __decorate([
-    websockets_1.WebSocketGateway(81, { transports: 'websocket' }),
+    websockets_1.WebSocketGateway({ transports: 'websocket' }),
     __param(0, typeorm_1.InjectRepository(events_repository_1.EventsRepository)),
     __metadata("design:paramtypes", [events_repository_1.EventsRepository])
 ], EventsGateway);

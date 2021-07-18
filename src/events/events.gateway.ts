@@ -10,7 +10,7 @@ import { LogEvent } from './event.entity';
 import { LogEventDto } from './events.dto';
 import { EventsRepository } from './events.repository';
 
-@WebSocketGateway(81, { transports: 'websocket' })
+@WebSocketGateway({ transports: 'websocket' })
 export class EventsGateway {
   constructor(
     @InjectRepository(EventsRepository)
