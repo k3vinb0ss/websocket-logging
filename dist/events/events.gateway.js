@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventsGateway = void 0;
 const typeorm_1 = require("@nestjs/typeorm");
@@ -37,7 +38,7 @@ let EventsGateway = class EventsGateway {
 };
 __decorate([
     websockets_1.WebSocketServer(),
-    __metadata("design:type", socket_io_1.Server)
+    __metadata("design:type", typeof (_a = typeof socket_io_1.Server !== "undefined" && socket_io_1.Server) === "function" ? _a : Object)
 ], EventsGateway.prototype, "server", void 0);
 __decorate([
     websockets_1.SubscribeMessage('events'),

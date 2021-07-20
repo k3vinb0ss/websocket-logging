@@ -2,7 +2,7 @@ import { IsEnum } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Priority {
-  DEBUG = 1,
+  DEBUG = 0,
   INFO,
   ERROR,
   WTF,

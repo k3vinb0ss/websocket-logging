@@ -14,10 +14,10 @@ const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
 var Priority;
 (function (Priority) {
-    Priority[Priority["DEBUG"] = 1] = "DEBUG";
-    Priority[Priority["INFO"] = 2] = "INFO";
-    Priority[Priority["ERROR"] = 3] = "ERROR";
-    Priority[Priority["WTF"] = 4] = "WTF";
+    Priority[Priority["DEBUG"] = 0] = "DEBUG";
+    Priority[Priority["INFO"] = 1] = "INFO";
+    Priority[Priority["ERROR"] = 2] = "ERROR";
+    Priority[Priority["WTF"] = 3] = "WTF";
 })(Priority = exports.Priority || (exports.Priority = {}));
 let LogEvent = class LogEvent {
 };

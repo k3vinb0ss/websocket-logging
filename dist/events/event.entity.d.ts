@@ -1,8 +1,8 @@
 export declare enum Priority {
-    DEBUG = 1,
-    INFO = 2,
-    ERROR = 3,
-    WTF = 4
+    DEBUG = 0,
+    INFO = 1,
+    ERROR = 2,
+    WTF = 3
 }
 export declare class LogEvent {
     id: string;
