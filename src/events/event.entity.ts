@@ -1,3 +1,4 @@
+import { Optional } from '@nestjs/common';
 import { IsEnum } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -17,7 +18,9 @@ export class LogEvent {
   @IsEnum(Priority)
   priority: Priority;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   tag: string;
 
   @Column()

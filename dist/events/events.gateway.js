@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventsGateway = void 0;
 const typeorm_1 = require("@nestjs/typeorm");
 const websockets_1 = require("@nestjs/websockets");
+const dgram_1 = require("dgram");
 const socket_io_1 = require("socket.io");
 const events_dto_1 = require("./events.dto");
 const events_repository_1 = require("./events.repository");
@@ -23,7 +24,7 @@ let EventsGateway = class EventsGateway {
     constructor(eventsRepository) {
         this.eventsRepository = eventsRepository;
     }
-    async receiveLogMessage(data) {
+    async receiveLogMessage(data, socket) {
         console.log('[EventSocket] ', data);
         const { priority, tag, content } = data;
         const logEvent = this.eventsRepository.create({
@@ -33,6 +34,7 @@ let EventsGateway = class EventsGateway {
             created: Date.now(),
         });
         this.eventsRepository.save(logEvent);
+        this.server.emit('logging', data);
         return logEvent;
     }
 };
@@ -43,8 +45,10 @@ __decorate([
 __decorate([
     websockets_1.SubscribeMessage('events'),
     __param(0, websockets_1.MessageBody()),
+    __param(1, websockets_1.ConnectedSocket()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [events_dto_1.LogEventDto]),
+    __metadata("design:paramtypes", [events_dto_1.LogEventDto,
+        dgram_1.Socket]),
     __metadata("design:returntype", Promise)
 ], EventsGateway.prototype, "receiveLogMessage", null);
 EventsGateway = __decorate([

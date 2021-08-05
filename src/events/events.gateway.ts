@@ -1,10 +1,12 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import {
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { Socket } from 'dgram';
 import { Server } from 'socket.io';
 import { LogEvent } from './event.entity';
 import { LogEventDto } from './events.dto';
@@ -21,7 +23,10 @@ export class EventsGateway {
   server: Server;
 
   @SubscribeMessage('events')
-  async receiveLogMessage(@MessageBody() data: LogEventDto): Promise<LogEvent> {
+  async receiveLogMessage(
+    @MessageBody() data: LogEventDto,
+    @ConnectedSocket() socket: Socket,
+  ): Promise<LogEvent> {
     console.log('[EventSocket] ', data);
     const { priority, tag, content } = data;
 
@@ -33,6 +38,9 @@ export class EventsGateway {
     });
 
     this.eventsRepository.save(logEvent);
+
+    // emit to others, in this case it's web loggers
+    this.server.emit('logging', data);
 
     return logEvent;
   }
